@@ -3,13 +3,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @u = User.find_by(:username => params[:username])
+    user = User.find_by(:username => params[:username])
 
-    if @u.password == params[:password]
-      session[:user_id] = @u.id
-      redirect_to users_url, :notice => "It matched!"
+    if user.present? && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect_to users_url, :notice => "Signed in successfully."
     else
-      redirect_to users_url, :notice => "Nice try!"
+      render new_session_url, :notice => "Please try again."
     end
   end
 
