@@ -3,8 +3,6 @@
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
 
-<%# g = Koala::Facebook::API.new(@user.facebook_access_token) %>
-
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">
@@ -22,22 +20,20 @@
         </dl>
 
         <ul class="media-list">
-          <%# g.get_connections("me", "home", :limit => 200).each do |post| %>
-          <%# if post["type"] == "video" %>
+          <% @user.posts.each do |post| %>
           <li class="media">
             <div class="media-left">
               <a href="#">
-                <img class="media-object" src="https://graph.facebook.com/<%#= post["from"]["id"] %>/picture" alt="...">
+                <img class="media-object" src="https://graph.facebook.com/<%= post.from_id %>/picture">
               </a>
             </div>
             <div class="media-body">
-              <h4 class="media-heading"><%#= post["from"]["name"] %></h4>
-              <%#= post["message"] %>
-              <%#= link_to "Go Watch", post["link"], :class => "btn btn-success" %>
+              <h4 class="media-heading"><%= post.from_name %></h4>
+              <%= post.message %>
+              <%= link_to "Go Watch", post.link, :class => "btn btn-success" %>
             </div>
           </li>
-          <%# end %>
-          <%# end %>
+          <% end %>
         </ul>
       </div>
     </div>
