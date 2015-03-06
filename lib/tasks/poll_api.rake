@@ -13,7 +13,7 @@ namespace :poll_api do
           # save
 
 
-    User.all.each do |user|
+    User.find_each do |user|
       g = Koala::Facebook::API.new(user.facebook_access_token)
 
       post_hashes = g.get_connections("me", "home", limit: 200).select { |p| p["type"] == "video" }
